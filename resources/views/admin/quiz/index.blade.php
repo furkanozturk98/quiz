@@ -3,6 +3,12 @@
         Quizzes
     </x-slot>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-body">
             <div class="card-title">
@@ -15,7 +21,7 @@
                     <th scope="col">Quiz</th>
                     <th scope="col">Status</th>
                     <th scope="col">End Date</th>
-                    <th scope="col"></th>
+                    <th scope="col" style="width:10%"></th>
                 </tr>
                 </thead>
                 <tbody>

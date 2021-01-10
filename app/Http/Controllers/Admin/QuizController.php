@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuizFormRequest;
 use App\Models\Quiz;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -26,22 +27,24 @@ class QuizController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-
+        return view('admin.quiz.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(QuizFormRequest $request)
     {
-        //
+        Quiz::query()->create($request->validated());
+
+        return redirect()->route('quizzes.index')->with('success','Quiz created successfully.');
     }
 
     /**
