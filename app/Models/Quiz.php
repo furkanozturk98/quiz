@@ -11,6 +11,7 @@ class Quiz extends Model
 
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'finished_at'
     ];
 }

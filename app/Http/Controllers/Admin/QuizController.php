@@ -31,7 +31,9 @@ class QuizController extends Controller
      */
     public function create()
     {
-        return view('admin.quiz.create');
+        return view('admin.quiz.form',[
+            'quiz' => new Quiz()
+        ]);
     }
 
     /**
@@ -61,24 +63,26 @@ class QuizController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Quiz $quiz
+     * @return View
      */
-    public function edit($id)
+    public function edit(Quiz $quiz)
     {
-        //
+        return view('admin.quiz.form',[
+            'quiz' => $quiz
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param QuizFormRequest $request
+     * @param Quiz $quiz
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(QuizFormRequest $request, Quiz $quiz)
     {
-        //
+        $quiz->update($request->validated());
     }
 
     /**
