@@ -5,8 +5,13 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ $quiz->exist ? route('quizzes.update',$quiz) : route('quizzes.store')}}" method="POST">
+            <form action="{{ $quiz->exists ? route('quizzes.update',$quiz) : route('quizzes.store')}}" method="POST">
                 @csrf
+
+                @if($quiz->exists)
+                    {{ method_field('PUT') }}
+                @endif
+
                 <div class="form-group">
                     <label>Title</label>
                     <input type="text" name="title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}"
@@ -44,7 +49,7 @@
                     <input
                         type="datetime-local" name="finished_at"
                         class="form-control {{ $errors->has('finished_at') ? 'is-invalid' : '' }}"
-                        value="{{ old('finished_at', date('Y-m-d\TH:i',strtotime($quiz->finished_at))) }}"
+                        @if($quiz->finished_at) value="{{ old('finished_at', date('Y-m-d\TH:i',strtotime($quiz->finished_at)))}} @endif"
                     >
 
                     @if ($errors->has('finished_at'))
@@ -55,7 +60,9 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-sm btn-block">Quiz Create</button>
+                    <button type="submit"
+                            class="btn btn-success btn-sm btn-block">{{ $quiz->exists ? 'Edit' : 'Create' }} Quiz
+                    </button>
                 </div>
 
             </form>
