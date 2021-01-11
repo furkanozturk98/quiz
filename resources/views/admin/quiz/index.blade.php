@@ -32,8 +32,14 @@
                         <td> {{ $quiz->status }} </td>
                         <td> {{ $quiz->finished_at }} </td>
                         <td>
-                            <a href="{{ route('quizzes.edit' ,$quiz) }}" class="btn btn-secondary btn-sm"> <i class="fa fa-pen"></i></a>
-                            <a href="{{ route('quizzes.destroy' ,$quiz) }}" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i></a>
+                            <a href="{{ route('quizzes.edit' ,$quiz) }}" class="btn btn-secondary btn-sm" style="display:inline-block;margin-right:10px;"> <i class="fa fa-pen"></i></a>
+
+                            <form action="{{ route('quizzes.destroy' ,$quiz) }}" method="POST" style="display:inline-block;">
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                {{ method_field('DELETE') }}
+                                {!! csrf_field() !!}
+                            </form>
+                            {{--<a href="{{ route('quizzes.destroy' ,$quiz) }}" class="btn btn-danger btn-sm"> </a>--}}
                         </td>
                     </tr>
                 @endforeach

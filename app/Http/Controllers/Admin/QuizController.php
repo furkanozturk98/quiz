@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\QuizFormRequest;
 use App\Models\Quiz;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
@@ -78,21 +79,28 @@ class QuizController extends Controller
      *
      * @param QuizFormRequest $request
      * @param Quiz $quiz
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(QuizFormRequest $request, Quiz $quiz)
     {
         $quiz->update($request->validated());
+
+        return redirect()->route('quizzes.index')->with('success','Quiz updated successfully.');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Quiz $quiz
+     * @return RedirectResponse
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+
+        return redirect()->route('quizzes.index')->with('success','Quiz deleted successfully.');
+
     }
 }
