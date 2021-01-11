@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ $quiz->exists ? 'Edit' : 'Create' }}
+        Quizzes
+    </x-slot>
+
+    <x-slot name="breadcrumb">
+        <a href="{{ route('quizzes.index') }}">Quizzes</a> &#x2192; {{ $quiz->exists ? 'Edit' : 'Create' }}
     </x-slot>
 
     <div class="card">

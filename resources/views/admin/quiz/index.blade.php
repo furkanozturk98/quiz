@@ -3,6 +3,10 @@
         Quizzes
     </x-slot>
 
+    <x-slot name="breadcrumb">
+        Quizzes
+    </x-slot>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
