@@ -22,10 +22,10 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Quiz</th>
+                    <th scope="col" style="width:40%">Quiz</th>
                     <th scope="col">Status</th>
                     <th scope="col">End Date</th>
-                    <th scope="col" style="width:10%"></th>
+                    <th scope="col" style="width:12%"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,14 +36,15 @@
                         <td> {{ $quiz->status }} </td>
                         <td> {{ $quiz->finished_at }} </td>
                         <td>
-                            <a href="{{ route('quizzes.edit' ,$quiz) }}" class="btn btn-secondary btn-sm" style="display:inline-block;margin-right:10px;"> <i class="fa fa-pen"></i></a>
+                            <a href="{{ route('questions.index' ,$quiz) }}" class="btn btn-warning btn-sm" style="display:inline-block;margin-right:3px;"> <i class="fa fa-question"></i></a>
+
+                            <a href="{{ route('quizzes.edit' ,$quiz) }}" class="btn btn-secondary btn-sm" style="display:inline-block;margin-right:3px;"> <i class="fa fa-pen"></i></a>
 
                             <form action="{{ route('quizzes.destroy' ,$quiz) }}" method="POST" style="display:inline-block;">
                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                 {{ method_field('DELETE') }}
                                 {!! csrf_field() !!}
                             </form>
-                            {{--<a href="{{ route('quizzes.destroy' ,$quiz) }}" class="btn btn-danger btn-sm"> </a>--}}
                         </td>
                     </tr>
                 @endforeach
