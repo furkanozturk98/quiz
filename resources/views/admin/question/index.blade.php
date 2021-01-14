@@ -39,7 +39,11 @@
                 @foreach($quiz->questions as $question)
                     <tr>
                         <th> {{ $question->question }} </th>
-                        <td> {{ $question->image }} </td>
+                        <td>
+                            @if($question->image)
+                                <a href="{{asset('uploads/'.$question->image)}}" target = "_blank" class="btn btn-sm btn-secondary">Show</a>
+                            @endif
+                        </td>
                         <td> {{ $question->answer1 }} </td>
                         <td> {{ $question->answer2 }} </td>
                         <td> {{ $question->answer3 }} </td>

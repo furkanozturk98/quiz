@@ -34,10 +34,7 @@ class QuestionController extends Controller
      */
     public function create(Quiz $quiz)
     {
-        return view('admin.question.form', [
-            'quiz' => $quiz,
-            'question' => new Question()
-        ]);
+        return $this->getForm($quiz, new Question());
     }
 
     /**
@@ -51,12 +48,7 @@ class QuestionController extends Controller
     {
         $attributes =  $request->validated();
 
-        if($request->hasFile('image')){
-            $fileName = Str::slug($request->question).'.'.$request->image->extension();
-            $fileNameWithUpload = $fileName;
-            $attributes['image']->move(public_path('uploads'),$fileName);
-            $attributes['image'] = $fileNameWithUpload;
-        }
+        $attributes = $this->checkImage($request, $attributes);
 
         $quiz->questions()->create($attributes);
 
@@ -84,23 +76,28 @@ class QuestionController extends Controller
      */
     public function edit(Quiz $quiz,Question $question)
     {
-        return view('admin.question.form', [
-            'quiz' => $quiz,
-            'question' => $question
-        ]);
+        return $this->getForm($quiz, $question);
+
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param QuestionFormRequest $request
      * @param Quiz $quiz
-     * @param int $id
-     * @return void
+     * @return RedirectResponse
      */
-    public function update(Request $request, Quiz $quiz ,$id)
+    public function update(QuestionFormRequest $request, Quiz $quiz)
     {
-        //
+        $attributes = $request->validated();
+
+        $attributes = $this->checkImage($request, $attributes);
+
+        $quiz->update($attributes);
+
+        return redirect()->route('questions.index',$quiz)->with('success','Question updated successfully');
+
     }
 
     /**
@@ -113,5 +110,34 @@ class QuestionController extends Controller
     public function destroy(Quiz $quiz,Question $question)
     {
         //
+    }
+
+    /**
+     * @param Quiz $quiz
+     * @param Question $question
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function getForm(Quiz $quiz, Question $question)
+    {
+        return view('admin.question.form', [
+            'quiz' => $quiz,
+            'question' => $question
+        ]);
+    }
+
+    /**
+     * @param QuestionFormRequest $request
+     * @param array $attributes
+     * @return array
+     */
+    public function checkImage(QuestionFormRequest $request, array $attributes)
+    {
+        if ($request->hasFile('image')) {
+            $fileName = Str::slug($request->question) . '.' . $request->image->extension();
+            $fileNameWithUpload = $fileName;
+            $attributes['image']->move(public_path('uploads'), $fileName);
+            $attributes['image'] = $fileNameWithUpload;
+        }
+        return $attributes;
     }
 }
