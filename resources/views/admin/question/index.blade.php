@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="breadcrumb">
-        <a href="{{route('quizzes.index')}}"> Quizzes </a> &#x2192; Questions
+        <a href="{{route('quizzes.index')}}"> Quizzes </a> &#x2192; {{ $quiz->title }} &#x2192; Questions
     </x-slot>
 
     @if(session('success'))
@@ -21,7 +21,7 @@
                 </a>
             </div>
 
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">Question</th>

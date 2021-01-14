@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuestionFormRequest;
 use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class QuestionController extends Controller
 {
@@ -40,12 +43,24 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param QuestionFormRequest $request
+     * @param Quiz $quiz
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(QuestionFormRequest $request,Quiz $quiz)
     {
-        //
+        $attributes =  $request->validated();
+
+        if($request->hasFile('image')){
+            $fileName = Str::slug($request->question).'.'.$request->image->extension();
+            $fileNameWithUpload = $fileName;
+            $attributes['image']->move(public_path('uploads'),$fileName);
+            $attributes['image'] = $fileNameWithUpload;
+        }
+
+        $quiz->questions()->create($attributes);
+
+        return redirect()->route('questions.index',$quiz)->with('success','Question created successfully');
     }
 
     /**

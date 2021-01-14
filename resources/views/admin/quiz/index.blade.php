@@ -19,7 +19,7 @@
                 <a href="{{ route('quizzes.create')  }}" class="btn btn-sm btn-primary"> <i class="fa fa-plus"></i> Create</a>
             </div>
 
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th scope="col" style="width:40%">Quiz</th>

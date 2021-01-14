@@ -63,9 +63,9 @@
                     @endif
                 </div>
 
-                <div class="form-group">
+                <div class="float-right">
                     <button type="submit"
-                            class="btn btn-success btn-sm btn-block">{{ $quiz->exists ? 'Edit' : 'Create' }} Quiz
+                            class="btn btn-primary">{{ $quiz->exists ? 'Edit' : 'Create' }} Quiz
                     </button>
                 </div>
 
