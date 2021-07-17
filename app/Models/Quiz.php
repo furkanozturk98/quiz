@@ -36,11 +36,17 @@ class Quiz extends Model
 
     protected $fillable = [
         'title',
+        'status',
         'description',
         'finished_at'
     ];
 
-    public function questions(){
+    protected $casts = [
+        'finished_at' => 'datetime'
+    ];
+
+    public function questions()
+    {
         return $this->hasMany(Question::class);
     }
 }

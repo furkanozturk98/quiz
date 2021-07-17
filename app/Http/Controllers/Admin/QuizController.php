@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\QuizFormRequest;
 use App\Models\Quiz;
+use App\QuizStatus;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,12 +17,18 @@ class QuizController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $quizzes = Quiz::query()->paginate(5);
+        $status = $request->input('status') != -1 ? $request->input('status') : null;
 
-        return view('admin.quiz.index',[
-            'quizzes' => $quizzes
+        $quizzes = Quiz::query()
+            ->when($request->input('title'), fn ($q, $value) => $q->where('title', $value))
+            ->when(isset($status), fn ($q) => $q->where('status', $status))
+            ->paginate(5);
+
+        return view('admin.quiz.index', [
+            'quizzes' => $quizzes,
+            'status' => QuizStatus::getLabels()
         ]);
     }
 
@@ -32,9 +39,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        return view('admin.quiz.form',[
-            'quiz' => new Quiz()
-        ]);
+        return $this->form(new Quiz());
     }
 
     /**
@@ -47,7 +52,7 @@ class QuizController extends Controller
     {
         Quiz::query()->create($request->validated());
 
-        return redirect()->route('quizzes.index')->with('success','Quiz created successfully.');
+        return redirect()->route('quizzes.index')->with('success', 'Quiz created successfully.');
     }
 
     /**
@@ -69,9 +74,7 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
-        return view('admin.quiz.form',[
-            'quiz' => $quiz
-        ]);
+        return $this->form($quiz);
     }
 
     /**
@@ -85,8 +88,7 @@ class QuizController extends Controller
     {
         $quiz->update($request->validated());
 
-        return redirect()->route('quizzes.index')->with('success','Quiz updated successfully.');
-
+        return redirect()->route('quizzes.index')->with('success', 'Quiz updated successfully.');
     }
 
     /**
@@ -100,7 +102,18 @@ class QuizController extends Controller
     {
         $quiz->delete();
 
-        return redirect()->route('quizzes.index')->with('success','Quiz deleted successfully.');
+        return redirect()->route('quizzes.index')->with('success', 'Quiz deleted successfully.');
+    }
 
+    /**
+     * @param Quiz $quiz
+     * @return View
+     */
+    public function form(Quiz $quiz): view
+    {
+        return view('admin.quiz.form', [
+            'quiz' => $quiz,
+            'status' => QuizStatus::getLabels()
+        ]);
     }
 }

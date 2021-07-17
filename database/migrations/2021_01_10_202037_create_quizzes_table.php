@@ -1,5 +1,6 @@
 <?php
 
+use App\QuizStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,15 @@ class CreateQuizzesTable extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
-            $table->enum('status',['publish','draft','passive'])->default('draft');
+
+            $table->enum('status',
+                [
+                    QuizStatus::DRAFT,
+                    QuizStatus::PASSIVE,
+                    QuizStatus::ACTIVE
+                ])
+                ->default(QuizStatus::DRAFT);
+
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
         });

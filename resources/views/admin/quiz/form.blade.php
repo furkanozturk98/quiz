@@ -42,9 +42,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        @foreach($status as $name => $value)
+
+                            <option value={{ $value }} {{ $value == $quiz->status ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+
+                    @if ($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
                     <input type="checkbox" @if($quiz->finished_at !== null) checked @endif onchange="change()">
                     <label>Will there be an end date?</label>
                 </div>
+
                 <div id="finished" class="form-group" @if($quiz->finished_at == null ) style="display: none" @endif>
                     <label>End Date</label>
 

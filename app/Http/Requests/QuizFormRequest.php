@@ -29,6 +29,7 @@ class QuizFormRequest extends FormRequest
                 'min:3',
                 'max:200'
             ],
+            'status'      => 'required',
             'description' => 'max:1000',
             'finished_at' => 'nullable|after:'.now()
         ];

@@ -33,10 +33,11 @@ class QuestionFormRequest extends FormRequest
                 'nullable',
                 'max:1024'
             ],
-            'answer1' => $this->getAnswerRule(),
-            'answer2' => $this->getAnswerRule(),
-            'answer3' => $this->getAnswerRule(),
-            'answer4' => $this->getAnswerRule(),
+            'option_a' => $this->getAnswerRule(),
+            'option_b' => $this->getAnswerRule(),
+            'option_c' => $this->getAnswerRule(),
+            'option_d' => $this->getAnswerRule(),
+            'option_e' => $this->getAnswerRule(),
             'correct_answer' => 'required'
         ];
     }

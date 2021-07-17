@@ -37,18 +37,22 @@
                             {{ $errors->first('image') }}
                         </div>
                     @endif
+
+                    @if($question->image)
+                        <img src="{{asset('uploads/'.$question->image)}}" height="150" width="200" style="margin-top: 15px">
+                    @endif
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
                             <label>Answer 1</label>
-                            <textarea name="answer1"
-                                      class="form-control {{ $errors->has('answer1') ? 'is-invalid' : '' }}" rows="2">{{ old('answer1' ,$question->answer1) }}</textarea>
+                            <textarea name="option_a"
+                                      class="form-control {{ $errors->has('option_a') ? 'is-invalid' : '' }}" rows="2">{{ old('option_a' ,$question->option_a) }}</textarea>
 
-                            @if ($errors->has('answer1'))
+                            @if ($errors->has('option_a'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('answer1') }}
+                                    {{ $errors->first('option_a') }}
                                 </div>
                             @endif
                         </div>
@@ -56,12 +60,12 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Answer 2</label>
-                            <textarea name="answer2"
-                                      class="form-control {{ $errors->has('answer2') ? 'is-invalid' : '' }}" rows="2">{{old('answer2' ,$question->answer2) }}</textarea>
+                            <textarea name="option_b"
+                                      class="form-control {{ $errors->has('option_b') ? 'is-invalid' : '' }}" rows="2">{{old('option_b' ,$question->option_b) }}</textarea>
 
-                            @if ($errors->has('answer2'))
+                            @if ($errors->has('option_b'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('answer2') }}
+                                    {{ $errors->first('option_b') }}
                                 </div>
                             @endif
                         </div>
@@ -72,12 +76,12 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Answer 3</label>
-                            <textarea name="answer3"
-                                      class="form-control {{ $errors->has('answer3') ? 'is-invalid' : '' }}" rows="2">{{ old('answer3' ,$question->answer3) }}</textarea>
+                            <textarea name="option_c"
+                                      class="form-control {{ $errors->has('option_c') ? 'is-invalid' : '' }}" rows="2">{{ old('option_c' ,$question->option_c) }}</textarea>
 
-                            @if ($errors->has('answer3'))
+                            @if ($errors->has('option_c'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('answer3') }}
+                                    {{ $errors->first('option_c') }}
                                 </div>
                             @endif
                         </div>
@@ -86,12 +90,26 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Answer 4</label>
-                            <textarea name="answer4"
-                                      class="form-control {{ $errors->has('answer4') ? 'is-invalid' : '' }}" rows="2">{{ old('answer4' ,$question->answer4) }}</textarea>
+                            <textarea name="option_d"
+                                      class="form-control {{ $errors->has('option_d') ? 'is-invalid' : '' }}" rows="2">{{ old('option_d' ,$question->option_d) }}</textarea>
 
-                            @if ($errors->has('answer4'))
+                            @if ($errors->has('option_d'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('answer4') }}
+                                    {{ $errors->first('option_d') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Answer 4</label>
+                            <textarea name="option_e"
+                                      class="form-control {{ $errors->has('option_e') ? 'is-invalid' : '' }}" rows="2">{{ old('option_e' ,$question->option_e) }}</textarea>
+
+                            @if ($errors->has('option_e'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('option_e') }}
                                 </div>
                             @endif
                         </div>
@@ -99,11 +117,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Correct Answer</label>
                     <select name="correct_answer" class="form-control">
-                        <option value="answer1">First answer</option>
-                        <option value="answer2">Second answer</option>
-                        <option value="answer3">Third answer</option>
-                        <option value="answer4">Fourth answer</option>
+                        <option value="option_a">A</option>
+                        <option value="option_b">B</option>
+                        <option value="option_c">C</option>
+                        <option value="option_d">D</option>
+                        <option value="option_e">E</option>
                     </select>
                 </div>
 

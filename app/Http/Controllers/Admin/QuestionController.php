@@ -17,12 +17,14 @@ class QuestionController extends Controller
      * Display a listing of the resource.
      *
      * @param Quiz $quiz
+     *
      * @return View
      */
-    public function index(Quiz $quiz)
-    {;
+    public function index(Quiz $quiz): View
+    {
         return view('admin.question.index', [
-            'quiz' => $quiz
+            'quiz'      => $quiz,
+            'questions' => $quiz->questions()->paginate(10)
         ]);
     }
 
@@ -30,9 +32,10 @@ class QuestionController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Quiz $quiz
+     *
      * @return View
      */
-    public function create(Quiz $quiz)
+    public function create(Quiz $quiz): View
     {
         return $this->getForm($quiz, new Question());
     }
@@ -42,9 +45,10 @@ class QuestionController extends Controller
      *
      * @param QuestionFormRequest $request
      * @param Quiz $quiz
+     *
      * @return RedirectResponse
      */
-    public function store(QuestionFormRequest $request,Quiz $quiz)
+    public function store(QuestionFormRequest $request, Quiz $quiz): RedirectResponse
     {
         $attributes =  $request->validated();
 
@@ -52,7 +56,7 @@ class QuestionController extends Controller
 
         $quiz->questions()->create($attributes);
 
-        return redirect()->route('questions.index',$quiz)->with('success','Question created successfully');
+        return redirect()->route('questions.index', $quiz)->with('success', 'Question created successfully');
     }
 
     /**
@@ -60,11 +64,11 @@ class QuestionController extends Controller
      *
      * @param Quiz $quiz
      * @param Question $question
+     *
      * @return void
      */
     public function show(Quiz $quiz, Question $question)
     {
-
     }
 
     /**
@@ -72,13 +76,12 @@ class QuestionController extends Controller
      *
      * @param Quiz $quiz
      * @param Question $question
+     *
      * @return View
      */
-    public function edit(Quiz $quiz,Question $question)
+    public function edit(Quiz $quiz, Question $question): View
     {
         return $this->getForm($quiz, $question);
-
-
     }
 
     /**
@@ -86,18 +89,19 @@ class QuestionController extends Controller
      *
      * @param QuestionFormRequest $request
      * @param Quiz $quiz
+     * @param Question $question
+     *
      * @return RedirectResponse
      */
-    public function update(QuestionFormRequest $request, Quiz $quiz)
+    public function update(QuestionFormRequest $request, Quiz $quiz, Question $question): RedirectResponse
     {
         $attributes = $request->validated();
 
         $attributes = $this->checkImage($request, $attributes);
 
-        $quiz->update($attributes);
+        $question->update($attributes);
 
-        return redirect()->route('questions.index',$quiz)->with('success','Question updated successfully');
-
+        return redirect()->route('questions.index', $quiz)->with('success', 'Question updated successfully');
     }
 
     /**
@@ -105,19 +109,26 @@ class QuestionController extends Controller
      *
      * @param Quiz $quiz
      * @param Question $question
-     * @return void
+     *
+     * @return RedirectResponse
      */
-    public function destroy(Quiz $quiz,Question $question)
+    public function destroy(Quiz $quiz, Question $question): RedirectResponse
     {
-        //
+        try {
+            $question->delete();
+        } catch (\Exception $e) {
+        }
+
+        return redirect()->route('questions.index', $quiz)->with('success', 'Question deleted successfully');
     }
 
     /**
      * @param Quiz $quiz
      * @param Question $question
-     * @return \Illuminate\Contracts\View\Factory|View
+     *
+     * @return View
      */
-    public function getForm(Quiz $quiz, Question $question)
+    public function getForm(Quiz $quiz, Question $question): View
     {
         return view('admin.question.form', [
             'quiz' => $quiz,
@@ -128,12 +139,13 @@ class QuestionController extends Controller
     /**
      * @param QuestionFormRequest $request
      * @param array $attributes
+     *
      * @return array
      */
-    public function checkImage(QuestionFormRequest $request, array $attributes)
+    public function checkImage(QuestionFormRequest $request, array $attributes): array
     {
         if ($request->hasFile('image')) {
-            $fileName = Str::slug($request->question) . '.' . $request->image->extension();
+            $fileName = Str::slug($request->input('question')) . '.' . $request->file('image')->extension();
             $fileNameWithUpload = $fileName;
             $attributes['image']->move(public_path('uploads'), $fileName);
             $attributes['image'] = $fileNameWithUpload;
