@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label>Answer 1</label>
                             <textarea name="answer1"
-                                      class="form-control {{ $errors->has('answer1') ? 'is-invalid' : '' }}" rows="2">{{ old('description' ,$question->answer1) }}</textarea>
+                                      class="form-control {{ $errors->has('answer1') ? 'is-invalid' : '' }}" rows="2">{{ old('answer1' ,$question->answer1) }}</textarea>
 
                             @if ($errors->has('answer1'))
                                 <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label>Answer 2</label>
                             <textarea name="answer2"
-                                      class="form-control {{ $errors->has('answer2') ? 'is-invalid' : '' }}" rows="2">{{old('description' ,$question->answer2) }}</textarea>
+                                      class="form-control {{ $errors->has('answer2') ? 'is-invalid' : '' }}" rows="2">{{old('answer2' ,$question->answer2) }}</textarea>
 
                             @if ($errors->has('answer2'))
                                 <div class="invalid-feedback">
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label>Answer 3</label>
                             <textarea name="answer3"
-                                      class="form-control {{ $errors->has('answer3') ? 'is-invalid' : '' }}" rows="2">{{ old('description' ,$question->answer3) }}</textarea>
+                                      class="form-control {{ $errors->has('answer3') ? 'is-invalid' : '' }}" rows="2">{{ old('answer3' ,$question->answer3) }}</textarea>
 
                             @if ($errors->has('answer3'))
                                 <div class="invalid-feedback">
@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label>Answer 4</label>
                             <textarea name="answer4"
-                                      class="form-control {{ $errors->has('answer4') ? 'is-invalid' : '' }}" rows="2">{{ old('description' ,$question->answe4) }}</textarea>
+                                      class="form-control {{ $errors->has('answer4') ? 'is-invalid' : '' }}" rows="2">{{ old('answer4' ,$question->answer4) }}</textarea>
 
                             @if ($errors->has('answer4'))
                                 <div class="invalid-feedback">

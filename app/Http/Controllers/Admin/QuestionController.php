@@ -20,7 +20,7 @@ class QuestionController extends Controller
      * @return View
      */
     public function index(Quiz $quiz)
-    {
+    {;
         return view('admin.question.index', [
             'quiz' => $quiz
         ]);

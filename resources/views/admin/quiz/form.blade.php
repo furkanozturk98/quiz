@@ -32,9 +32,7 @@
                 <div class="form-group">
                     <label>Description</label>
                     <textarea name="description"
-                              class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" rows="4">
-                            {{ old('description' ,$quiz->description) }}
-                        </textarea>
+                              class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" rows="4">{{ old('description' ,$quiz->description) }}</textarea>
 
                     @if ($errors->has('description'))
                         <div class="invalid-feedback">
@@ -53,7 +51,7 @@
                     <input
                         type="datetime-local" name="finished_at"
                         class="form-control {{ $errors->has('finished_at') ? 'is-invalid' : '' }}"
-                        @if($quiz->finished_at) value="{{ old('finished_at', date('Y-m-d\TH:i',strtotime($quiz->finished_at)))}} @endif"
+                        @if($quiz->finished_at) value="{{ date('Y-m-d\TH:i',strtotime($quiz->finished_at)) }} @endif"
                     >
 
                     @if ($errors->has('finished_at'))

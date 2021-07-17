@@ -20,45 +20,44 @@
                     Create
                 </a>
             </div>
-
+            @if($quiz->questions->count())
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">Question</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">1. Answer</th>
-                    <th scope="col">2. Answer</th>
-                    <th scope="col">3. Answer</th>
-                    <th scope="col">4. Answer</th>
-                    <th scope="col">Correct Answer</th>
-                    <th scope="col"></th>
+                    <th>Question</th>
+                    <th>Image</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>Correct Answer</th>
+                    <th style="width:100px"></th>
                 </tr>
                 </thead>
                 <tbody>
 
                 @foreach($quiz->questions as $question)
                     <tr>
-                        <th> {{ $question->question }} </th>
+                        <td> {{ $question->question }} </td>
                         <td>
                             @if($question->image)
                                 <a href="{{asset('uploads/'.$question->image)}}" target = "_blank" class="btn btn-sm btn-secondary">Show</a>
                             @endif
                         </td>
-                        <td> {{ $question->answer1 }} </td>
-                        <td> {{ $question->answer2 }} </td>
-                        <td> {{ $question->answer3 }} </td>
-                        <td> {{ $question->answer4 }} </td>
-                        <td> {{ $question->correct_answer }} </td>
+                        <td> {{ $question->option_a }} </td>
+                        <td> {{ $question->option_b }} </td>
+                        <td> {{ $question->option_c }} </td>
+                        <td> {{ $question->option_d }} </td>
+                        <td> {{ $question->option_e }} </td>
+                        <td> {{ \App\QuestionOptions::getLabel($question->correct_answer) }} </td>
                         <td>
-                            <a href="{{ route('questions.index' ,$question) }}" class="btn btn-warning btn-sm"
-                               style="display:inline-block;margin-right:3px;"> <i class="fa fa-question"></i></a>
-
-                            <a href="{{ route('questions.edit' ,[ $quiz, $question ]) }}" class="btn btn-secondary btn-sm"
+                            <a href="{{ route('questions.edit' ,[ $quiz, $question ]) }}" class="btn btn-outline-secondary btn-sm"
                                style="display:inline-block;margin-right:3px;"> <i class="fa fa-pen"></i></a>
 
                             <form action="{{ route('questions.destroy' ,[ $quiz, $question ]) }}" method="POST"
                                   style="display:inline-block;">
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>
                                 {{ method_field('DELETE') }}
                                 {!! csrf_field() !!}
                             </form>
@@ -68,7 +67,9 @@
 
                 </tbody>
             </table>
-
+            @else
+                <div class="alert alert-danger">This quiz dont have any question yet</div>
+            @endif
             {{--{{ $quizzes->links()  }}--}}
         </div>
     </div>
