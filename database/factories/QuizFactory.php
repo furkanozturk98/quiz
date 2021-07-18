@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Model;
 use App\Models\Quiz;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class QuizFactory extends Factory
 {
@@ -22,9 +22,12 @@ class QuizFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence(rand(3,7));
+
         return [
-            'title' => $this->faker->sentence(rand(3,7)),
-            'description' => $this->faker->text(200)
+            'title' => $title,
+            'description' => $this->faker->text(200),
+            'slug' => Str::slug($title)
         ];
     }
 }

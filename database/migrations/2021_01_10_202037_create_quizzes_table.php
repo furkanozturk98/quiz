@@ -18,6 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
+            $table->string('slug');
 
             $table->enum('status',
                 [

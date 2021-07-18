@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\QuizController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -12,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');*/
+
+Route::group(['middleware' => ['auth']],function (){
+    Route::get('home',[HomeController::class, 'index'])->name('dashboard');
+    Route::get('quiz/{slug}',[HomeController::class, 'show'])->name('quiz.detail');
+});
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'],function (){
     Route::resource('quizzes',QuizController::class);
