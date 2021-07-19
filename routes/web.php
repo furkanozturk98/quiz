@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::group(['middleware' => ['auth']],function (){
     Route::get('home',[HomeController::class, 'index'])->name('dashboard');
     Route::get('quiz/{slug}',[HomeController::class, 'show'])->name('quiz.detail');
+    Route::get('quiz/{slug}/join',[HomeController::class, 'join'])->name('quiz.detail');
 });
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'],function (){
