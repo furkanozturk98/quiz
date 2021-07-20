@@ -47,6 +47,25 @@ class Quiz extends Model
         'finished_at' => 'datetime',
     ];
 
+    protected $appends = ['details'];
+
+    public function getDetailsAttribute()
+    {
+        return [
+            'average' =>  round($this->results()->avg('grade')),
+            'join_count' => $this->results()->count()
+        ];
+    }
+
+    public function result()
+    {
+        return $this->hasOne(Result::class)->where('user_id', auth()->id());
+    }
+
+    public function results(){
+        return $this->hasMany(Result::class);
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);

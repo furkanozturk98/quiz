@@ -7,10 +7,16 @@
         Home
     </x-slot>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-8">
             <div class="list-group">
-
+                @if($quizzes->count())
                 @foreach($quizzes as $quiz)
                     <a href="{{ route('quiz.detail', $quiz->slug) }}" class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
@@ -25,6 +31,9 @@
                 <div class="mt-2">
                     {{ $quizzes->links() }}
                 </div>
+                @else
+                    <div class="alert alert-danger">There is no active quiz yet.</div>
+                @endif
             </div>
         </div>
 
