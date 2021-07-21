@@ -6,17 +6,24 @@ use App\Models\Quiz;
 use App\QuizStatus;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     public function index(Request $request)
     {
         $quizzes = Quiz::query()
             ->where('status', '=',(string)QuizStatus::ACTIVE)
+            ->where(function ($query){
+                $query->where('finished_at', '>', now())
+                    ->orWhereNull('finished_at');
+            })
             ->withCount('questions')
             ->paginate(5);
 
+        $results = auth()->user()->results;
+
         return view('dashboard',[
-            'quizzes' => $quizzes
+            'quizzes' => $quizzes,
+            'results' => $results
         ]);
     }
 

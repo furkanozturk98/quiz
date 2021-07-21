@@ -12,6 +12,11 @@
             <div class="card-text">
 
                 @if($quiz->result)
+
+                    <h2 class="mb-3">
+                        Grade: <strong>{{ $quiz->result->grade }}</strong>
+                    </h2>
+
                     <div class="alert alert-info mb-3">
                         <i class="fa fa-square"></i> Your choice<br>
                         <i class="fa fa-check text-success"></i> Correct Answer<br>
@@ -22,6 +27,8 @@
                 <form method="POST" action="{{ route('quiz.join.store',$quiz->slug )  }}">
                     @csrf
                     @foreach($quiz->questions as $question)
+
+                        <p class="text-sm text-info">Users gave {{ $question->true_percent }}% correct answer to this question</p>
 
                         @if($quiz->result)
                             @if($question->correct_answer == $question->my_answer->answer)

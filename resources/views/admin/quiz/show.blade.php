@@ -10,23 +10,6 @@
     <div class="row">
         <div class="col-4">
             <ul class="list-group">
-                @if($quiz->my_rank)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Your Rank
-                        <span class="badge badge-success badge-pill">#{{ $quiz->my_rank}}</span>
-                    </li>
-                @endif
-                @if($quiz->result)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Grade
-                        <span class="badge badge-primary badge-pill">{{ $quiz?->result->grade}}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Number of correct / incorrect questions
-                        <span
-                            class="badge badge-warning badge-pill">{{ $quiz?->result->correct }} / {{ $quiz?->result->wrong }}</span>
-                    </li>
-                @endif
                 @if($quiz->finished_at)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Last Date to join
@@ -71,18 +54,28 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text">{{ $quiz->description }}</p>
-                    @if($quiz->result)
-                        <a href="{{ route('quiz.join', $quiz->slug)  }}" class="btn btn-warning float-right">
-                            Show Quiz
-                        </a>
-                    @elseif($quiz->finished_at < now())
-                        <button type="button" class="btn btn-danger float-right" disabled="">You can no longer join to this quiz</button>
-                    @else
-                        <a href="{{ route('quiz.join', $quiz->slug)  }}" class="btn btn-primary float-right">
-                            Click to start quiz
-                        </a>
-                    @endif
+                    <p class="card-text mb-3">{{ $quiz->description }}</p>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name Surname</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Correct</th>
+                            <th scope="col">Incorrect</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($quiz->results as $result)
+                            <tr>
+                                <td>{{ $result->user->name }}</td>
+                                <td>{{ $result->grade }}</td>
+                                <td>{{ $result->correct }}</td>
+                                <td>{{ $result->wrong }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

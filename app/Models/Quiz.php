@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Quiz
@@ -90,6 +91,11 @@ class Quiz extends Model
     {
         return $this->results()->orderByDesc('grade')->take(10);
     }
+
+   /* public function getFormattedFinishedAtAttribute()
+    {
+        return Carbon::parse($this->finished_at)->format('Y-m-d\TH:i');
+    }*/
 
     public function sluggable(): array
     {

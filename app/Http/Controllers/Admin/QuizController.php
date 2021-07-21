@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\QuizFormRequest;
 use App\Models\Quiz;
 use App\QuizStatus;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,12 +60,17 @@ class QuizController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Quiz $quiz
+     *
+     * @return View
      */
-    public function show($id)
+    public function show(Quiz $quiz): View
     {
-        //
+        $quiz->load('topTen.user','results.user');
+
+        return View('admin.quiz.show', [
+           'quiz' => $quiz
+        ]);
     }
 
     /**

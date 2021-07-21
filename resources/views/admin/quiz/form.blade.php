@@ -68,7 +68,7 @@
                     <input
                         type="datetime-local" name="finished_at"
                         class="form-control {{ $errors->has('finished_at') ? 'is-invalid' : '' }}"
-                        @if($quiz->finished_at) value="{{ date('Y-m-d\TH:i',strtotime($quiz->finished_at)) }} @endif"
+                        @if($quiz->finished_at) value="{{  $quiz->finished_at }} @endif"
                     >
 
                     @if ($errors->has('finished_at'))

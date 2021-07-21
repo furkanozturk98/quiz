@@ -48,7 +48,7 @@
                             <th scope="col" class="text-center">Question Count</th>
                             <th scope="col" class="text-center">Status</th>
                             <th scope="col" class="text-center">End Date</th>
-                            <th scope="col" style="width:12%"></th>
+                            <th scope="col" style="width:15%"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,6 +64,10 @@
                                 </td>
                                 <td class="text-center"> {{ $quiz->finished_at?->diffForHumans() }} </td>
                                 <td>
+                                    <a href="{{ route('quizzes.show' ,$quiz) }}" class="btn btn-outline-secondary btn-sm"
+                                       style="display:inline-block;margin-right:3px;"> <i
+                                            class="fa fa-info-circle"></i></a>
+
                                     <a href="{{ route('questions.index' ,$quiz) }}" class="btn btn-outline-info btn-sm"
                                        style="display:inline-block;margin-right:3px;"> <i
                                             class="fa fa-question"></i></a>

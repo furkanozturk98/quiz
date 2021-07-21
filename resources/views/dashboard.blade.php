@@ -38,7 +38,19 @@
         </div>
 
         <div class="col-4">
-            asdasd
+            <div class="card">
+                <div class="card-header">
+                    Quiz Results
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach($results as $result)
+                        <li class="list-group-item">
+                            <span class="badge badge-success">{{ $result->grade }} </span>
+                            <a href="{{route('quiz.detail',$result->quiz->slug)}}">{{ $result->quiz->title }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     </div>
 </x-app-layout>
