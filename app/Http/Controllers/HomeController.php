@@ -22,12 +22,12 @@ class HomeController extends Controller
 
     public function show($slug)
     {
+
         /** @var Quiz $quiz */
-        $quiz = Quiz::whereSlug($slug)
-            ->with('result','results')
+         $quiz = Quiz::whereSlug($slug)
+            ->with('result','topTen.user')
             ->withCount('questions')
             ->first();
-
 
         return view('admin.quiz.detail', [
             'quiz' => $quiz

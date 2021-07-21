@@ -10,10 +10,16 @@
     <div class="row">
         <div class="col-4">
             <ul class="list-group">
+                @if($quiz->my_rank)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Your Rank
+                        <span class="badge badge-success badge-pill">#{{ $quiz->my_rank}}</span>
+                    </li>
+                @endif
                 @if($quiz->result)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Grade
-                        <span class="badge badge-success badge-pill">{{ $quiz?->result->grade}}</span>
+                        <span class="badge badge-primary badge-pill">{{ $quiz?->result->grade}}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Number of correct / incorrect questions
@@ -29,18 +35,37 @@
                 @endif
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Question count
-                    <span class="badge badge-primary badge-pill">{{ $quiz->questions_count }}</span>
+                    <span class="badge badge-info badge-pill">{{ $quiz->questions_count }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     The number of participants
-                    <span class="badge badge-primary badge-pill">{{ $quiz->details['join_count'] }}</span>
+                    <span class="badge badge-secondary badge-pill">{{ $quiz->details['join_count'] }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Average Grade
-                    <span class="badge badge-primary badge-pill">{{ $quiz->details['average'] }}</span>
+                    <span class="badge badge-info badge-pill">{{ $quiz->details['average'] }}</span>
                 </li>
             </ul>
+
+            @if($quiz->topTen)
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Top 10</h5>
+                        <ul class="list-group">
+                            @foreach($quiz->topTen as $item )
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="h-3">{{ $loop->iteration }}.</strong>
+                                    <img src="{{ $item->user->profile_photo_url }}" alt="{{ $item->user->name }}"
+                                         class="w-8 h-8 rounded-full">
+                                    {{ $item->user->name }}
+                                    <span class="badge badge-success badge-pill"> {{$item->grade}} </span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
         </div>
+        @endif
 
         <div class="col-8">
             <div class="card">

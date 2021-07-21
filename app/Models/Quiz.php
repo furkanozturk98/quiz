@@ -47,7 +47,7 @@ class Quiz extends Model
         'finished_at' => 'datetime',
     ];
 
-    protected $appends = ['details'];
+    protected $appends = ['details', 'my_rank'];
 
     public function getDetailsAttribute()
     {
@@ -55,6 +55,21 @@ class Quiz extends Model
             'average' =>  round($this->results()->avg('grade')),
             'join_count' => $this->results()->count()
         ];
+    }
+
+    public function getMyRankAttribute()
+    {
+        $rank = 0;
+        foreach ($this->results()->orderByDesc('grade')->get() as $result){
+
+            $rank++;
+
+            if(auth()->id() === $result->user_id){
+                return $rank;
+            }
+        }
+
+        return null;
     }
 
     public function result()
@@ -69,6 +84,11 @@ class Quiz extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function topTen()
+    {
+        return $this->results()->orderByDesc('grade')->take(10);
     }
 
     public function sluggable(): array

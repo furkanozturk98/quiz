@@ -16,4 +16,9 @@ class Result extends Model
         'correct',
         'wrong'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
