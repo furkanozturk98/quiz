@@ -51,4 +51,9 @@ class Question extends Model
         'option_e',
         'correct_answer'
     ];
+
+    public function my_answer()
+    {
+        return $this->hasOne(Answer::class)->where('user_id',auth()->id());
+    }
 }

@@ -47,7 +47,7 @@
                 </li>
             </ul>
 
-            @if($quiz->topTen)
+            @if(!empty($quiz->topTen))
                 <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Top 10</h5>
@@ -64,8 +64,9 @@
                         </ul>
                     </div>
                 </div>
+            @endif
         </div>
-        @endif
+
 
         <div class="col-8">
             <div class="card">

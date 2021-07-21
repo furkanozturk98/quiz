@@ -13,8 +13,8 @@ class QuizJoinController extends Controller
     {
         /** @var Quiz $quiz */
         $quiz = Quiz::whereSlug($slug)
-            ->with('questions')
-            ->first();
+            ->with('questions.my_answer')
+            ->first() ?? abort(404);
 
         return view('admin.quiz.join', [
             'quiz' => $quiz
