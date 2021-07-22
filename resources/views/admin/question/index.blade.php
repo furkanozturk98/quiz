@@ -67,7 +67,7 @@
                     </table>
                 </div>
             @else
-                <div class="alert alert-danger">This quiz dont have any question yet</div>
+                <div class="alert alert-danger mt-5">This quiz dont have any question yet</div>
             @endif
             {{ $questions->links() }}
         </div>

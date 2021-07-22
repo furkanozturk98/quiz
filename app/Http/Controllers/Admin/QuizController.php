@@ -66,7 +66,8 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz): View
     {
-        $quiz->load('topTen.user','results.user');
+        $quiz->load('topTen.user','results.user')
+            ->loadCount('questions');
 
         return View('admin.quiz.show', [
            'quiz' => $quiz

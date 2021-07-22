@@ -40,7 +40,7 @@ class QuizJoinController extends Controller
 
             ]);
 
-            if($question->correct_answer === $request->post($question->id)){
+            if($question->correct_answer == $request->post($question->id)){
                 $correct++;
             }
         }

@@ -30,7 +30,7 @@
                 </li>
             </ul>
 
-            @if(!empty($quiz->topTen))
+            @if(empty($quiz->topTen))
                 <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Top 10</h5>

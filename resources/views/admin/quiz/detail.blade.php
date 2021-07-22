@@ -47,7 +47,7 @@
                 </li>
             </ul>
 
-            @if(!empty($quiz->topTen))
+            @if(empty($quiz->topTen))
                 <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Top 10</h5>
@@ -76,7 +76,7 @@
                         <a href="{{ route('quiz.join', $quiz->slug)  }}" class="btn btn-warning float-right">
                             Show Quiz
                         </a>
-                    @elseif($quiz->finished_at < now())
+                    @elseif($quiz->finished_at && $quiz->finished_at < now())
                         <button type="button" class="btn btn-danger float-right" disabled="">You can no longer join to this quiz</button>
                     @else
                         <a href="{{ route('quiz.join', $quiz->slug)  }}" class="btn btn-primary float-right">

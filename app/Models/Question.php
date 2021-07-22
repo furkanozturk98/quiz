@@ -56,7 +56,7 @@ class Question extends Model
 
     public function getTruePercentAttribute()
     {
-        $answer_count = $this->answers()->count();
+        $answer_count = $this->answers()->count() ?: 1;
 
         $true_count = $this->answers()->where('answer', $this->correct_answer)->count();
 
